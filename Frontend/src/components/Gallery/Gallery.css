@@ -1,0 +1,210 @@
+#gallery {
+  padding: 110px 0 110px 64px;
+  background: var(--ivory);
+  overflow: hidden;
+}
+
+/* ── Strip wrapper ── */
+.gallery-strip-wrap {
+  position: relative;
+  margin-top: 56px;
+}
+
+/* Cinematic fade masks on both edges */
+.gallery-strip-wrap::before,
+.gallery-strip-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 4;
+  pointer-events: none;
+}
+.gallery-strip-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, var(--ivory) 30%, transparent);
+}
+.gallery-strip-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, var(--ivory) 30%, transparent);
+}
+
+/* ── Scrollable track ── */
+.gallery-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 12px 64px 12px 0;
+  position: relative;
+}
+.gallery-track::-webkit-scrollbar { display: none; }
+
+/* Grain texture atmospheric overlay */
+.gallery-track::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.032;
+  mix-blend-mode: multiply;
+  z-index: 3;
+}
+
+/* ── Cards ── */
+.gallery-card {
+  height: 480px;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+  display: block;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.06);
+}
+
+/* ── Hero card ── */
+.gallery-card--hero {
+  height: 560px;
+}
+
+.gallery-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12, 30, 20, 0.7) 0%, rgba(12, 30, 20, 0.1) 45%, transparent 65%);
+  display: flex;
+  align-items: flex-end;
+  padding: 32px 36px;
+  pointer-events: none;
+}
+
+.gallery-card-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.5px;
+}
+
+/* ── Glassmorphism arrow buttons ── */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--deep-green);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.gallery-arrow:hover {
+  background: var(--gold);
+  color: var(--deep-green);
+  border-color: var(--gold);
+  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.3);
+}
+
+.gallery-arrow--left  { left: 20px; }
+.gallery-arrow--right { right: 20px; }
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  #gallery {
+    padding: 90px 0 90px 32px;
+  }
+  .gallery-card {
+    height: 400px;
+  }
+  .gallery-card--hero {
+    height: 480px;
+  }
+  .gallery-strip-wrap::before,
+  .gallery-strip-wrap::after {
+    width: 100px;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  #gallery {
+    padding: 70px 0;
+  }
+  .gallery-track {
+    padding-left: 20px;
+    padding-right: 0;
+    gap: 12px;
+  }
+  .gallery-card {
+    height: 300px;
+  }
+  .gallery-card--hero {
+    height: 360px;
+  }
+  .gallery-strip-wrap::before,
+  .gallery-strip-wrap::after {
+    width: 50px;
+  }
+  .gallery-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 0.72rem;
+  }
+  .gallery-arrow--left  { left: 8px; }
+  .gallery-arrow--right { right: 8px; }
+  .gallery-card-label {
+    font-size: 1.2rem;
+  }
+  .gallery-card-overlay {
+    padding: 24px;
+  }
+}
+
+/* ── Small phones ── */
+@media (max-width: 480px) {
+  #gallery {
+    padding: 60px 0;
+  }
+  .gallery-track {
+    padding-left: 16px;
+    gap: 10px;
+  }
+  .gallery-card {
+    height: 260px;
+  }
+  .gallery-card--hero {
+    height: 320px;
+  }
+  .gallery-strip-wrap::before,
+  .gallery-strip-wrap::after {
+    width: 30px;
+  }
+  .gallery-strip-wrap {
+    margin-top: 36px;
+  }
+}

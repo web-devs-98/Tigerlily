@@ -1,0 +1,129 @@
+#testimonials {
+  background: var(--deep-green);
+  padding: 110px 64px;
+  text-align: center;
+}
+
+/* ── Stage ── */
+.tst-stage {
+  max-width: 780px;
+  margin: 64px auto 0;
+}
+
+/* ── Fade transitions ── */
+.tst-fade-in {
+  animation: tst-in 0.4s ease both;
+}
+.tst-fade-out {
+  animation: tst-out 0.3s ease both;
+}
+
+@keyframes tst-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes tst-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+/* ── Decorative opening quote mark ── */
+.tst-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 7rem;
+  line-height: 0.6;
+  color: var(--gold);
+  opacity: 0.35;
+  margin-bottom: 24px;
+  user-select: none;
+}
+
+/* ── Quote text ── */
+.tst-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.75;
+  margin: 0 0 28px;
+  letter-spacing: 0.2px;
+}
+
+/* ── Stars ── */
+.tst-stars {
+  color: var(--gold);
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  margin-bottom: 22px;
+}
+
+.tst-star-empty {
+  color: rgba(201, 168, 76, 0.25);
+}
+
+/* ── Author line ── */
+.tst-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tst-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.tst-sep {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
+}
+
+.tst-occasion {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Dot navigation ── */
+.tst-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 48px;
+}
+
+.tst-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.tst-dot.active {
+  background: var(--gold);
+  transform: scale(1.4);
+}
+
+.tst-dot:hover:not(.active) {
+  background: rgba(201, 168, 76, 0.45);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  #testimonials {
+    padding: 80px 32px;
+  }
+
+  .tst-mark {
+    font-size: 5rem;
+  }
+}

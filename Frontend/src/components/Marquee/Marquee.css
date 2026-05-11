@@ -1,0 +1,36 @@
+.marquee-band {
+  background: var(--gold);
+  padding: 15px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 32px;
+  font-size: 0.7rem;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--deep-green);
+  font-weight: 700;
+}
+
+.mdot {
+  width: 4px;
+  height: 4px;
+  background: var(--deep-green);
+  border-radius: 50%;
+  opacity: 0.35;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

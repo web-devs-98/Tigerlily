@@ -1,0 +1,210 @@
+/* ── Hero ── */
+.he-hero {
+  background: var(--deep-green);
+  padding: 160px 64px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.he-back-btn {
+  position: absolute;
+  top: 110px;
+  left: 64px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.3s;
+  padding: 0;
+}
+
+.he-back-btn:hover {
+  color: var(--gold);
+}
+
+.he-hero-content {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.he-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.1;
+  margin: 18px 0 16px;
+}
+
+.he-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.he-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.38);
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+/* ── Body ── */
+.he-body {
+  background: var(--deep-green);
+  padding: 64px 64px 120px;
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Form ── */
+.he-form {
+  width: 100%;
+  max-width: 620px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.he-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.he-field--full {
+  grid-column: 1 / -1;
+}
+
+.he-field label {
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.he-field label span {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.he-field input,
+.he-field select,
+.he-field textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  padding: 14px 18px;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s;
+  resize: none;
+}
+
+.he-field input::placeholder,
+.he-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.he-field input:focus,
+.he-field select:focus,
+.he-field textarea:focus {
+  border-color: rgba(201, 168, 76, 0.55);
+}
+
+.he-field select option {
+  background: var(--deep-green);
+}
+
+/* date input calendar icon color on dark bg */
+.he-field input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}
+
+.he-submit-btn {
+  grid-column: 1 / -1;
+  background: var(--gold);
+  color: var(--deep-green);
+  border: none;
+  padding: 16px 42px;
+  font-size: 0.74rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s;
+  margin-top: 8px;
+}
+
+.he-submit-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(201, 168, 76, 0.3);
+}
+
+/* ── Success state ── */
+.he-success {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.he-success i {
+  font-size: 2.4rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.he-success p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.he-success strong {
+  color: var(--gold-light);
+  font-style: normal;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .he-hero {
+    padding: 140px 24px 60px;
+  }
+
+  .he-back-btn {
+    top: 100px;
+    left: 24px;
+  }
+
+  .he-body {
+    padding: 48px 24px 90px;
+  }
+
+  .he-form {
+    grid-template-columns: 1fr;
+  }
+}

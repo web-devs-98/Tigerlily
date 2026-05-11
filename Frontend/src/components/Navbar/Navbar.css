@@ -1,0 +1,291 @@
+/* ── Scroll progress bar ── */
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--gold);
+  z-index: 1100;
+  transition: width 0.1s linear;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(201, 168, 76, 0.6);
+}
+
+/* ── Navbar ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 28px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+}
+
+nav.scrolled {
+  padding: 16px 64px;
+  background: rgba(26, 51, 41, 0.97);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Logo ── */
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.65rem;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.nav-logo span {
+  color: var(--gold);
+}
+
+/* ── Desktop links ── */
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: color 0.3s;
+  padding-bottom: 3px;
+}
+
+/* Underline indicator */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.35s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--gold);
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ── CTA button ── */
+.nav-cta {
+  background: var(--gold) !important;
+  color: var(--deep-green) !important;
+  padding: 11px 26px !important;
+  border-radius: 2px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  transition: all 0.3s !important;
+}
+
+.nav-cta:hover {
+  background: var(--gold-light) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* No underline on the CTA */
+.nav-cta::after {
+  display: none !important;
+}
+
+/* ── Hamburger button ── */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: white;
+  transition: transform 0.35s ease, opacity 0.25s ease, width 0.35s ease;
+  transform-origin: center;
+}
+
+/* Morph to × when open */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile fullscreen menu ── */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--deep-green);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+/* ── Mobile menu branding ── */
+.mobile-menu-brand {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.mobile-menu-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.8rem;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+
+.mobile-menu-logo span {
+  color: var(--gold);
+}
+
+.mobile-menu-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+.mobile-menu-divider {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 8px auto 0;
+}
+
+/* Staggered link entrance */
+.mobile-link {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: white;
+  text-decoration: none;
+  font-style: italic;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: color 0.3s, opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-link.visible {
+  opacity: 0.85;
+  transform: translateY(0);
+}
+
+.mobile-link:hover {
+  color: var(--gold);
+  opacity: 1 !important;
+}
+
+.mobile-close {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s;
+}
+
+.mobile-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--gold);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  nav {
+    padding: 20px 24px;
+  }
+  nav.scrolled {
+    padding: 14px 24px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    padding: 16px 18px;
+  }
+  nav.scrolled {
+    padding: 12px 18px;
+  }
+  .nav-logo {
+    font-size: 1.4rem;
+  }
+  .mobile-link {
+    font-size: 1.75rem;
+  }
+  .mobile-menu {
+    gap: 22px;
+  }
+  .mobile-menu-logo {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobile-link {
+    font-size: 1.5rem;
+  }
+  .mobile-menu {
+    gap: 18px;
+  }
+}

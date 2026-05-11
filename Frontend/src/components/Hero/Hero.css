@@ -1,0 +1,365 @@
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 720px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1);
+  /* instant cut between slides — zoom is the only transition */
+  transition: opacity 0s;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  animation: zoom-in 5.5s ease-out forwards;
+}
+
+@keyframes zoom-in {
+  from { transform: scale(1);    }
+  to   { transform: scale(1.12); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* Slightly lighter so leaf details breathe through */
+  background: linear-gradient(145deg, rgba(20, 45, 35, 0.82) 0%, rgba(26, 51, 41, 0.60) 55%, rgba(10, 25, 18, 0.75) 100%);
+}
+
+.hero-botanical {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.leaf-deco {
+  position: absolute;
+  opacity: 0.28;   /* was 0.1 — now clearly visible */
+  filter: drop-shadow(0 0 18px rgba(74, 124, 90, 0.45));
+}
+
+.leaf-deco-1 {
+  top: -8%;
+  right: 2%;
+  width: 420px;    /* slightly larger */
+  animation: leaf-sway 9s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.leaf-deco-2 {
+  bottom: 5%;
+  left: -4%;
+  width: 340px;    /* slightly larger */
+  animation: leaf-sway 11s ease-in-out infinite reverse;
+  transform-origin: bottom center;
+}
+
+.leaf-deco-3 {
+  top: 30%;
+  right: -6%;
+  width: 260px;    /* slightly larger */
+  opacity: 0.18;   /* was 0.06 */
+  filter: drop-shadow(0 0 12px rgba(74, 124, 90, 0.3));
+  animation: leaf-sway 14s ease-in-out infinite;
+}
+
+@keyframes leaf-sway {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  33%       { transform: rotate(5deg) scale(1.03); }
+  66%       { transform: rotate(-3deg) scale(0.98); }
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  animation: float-particle linear infinite;
+}
+
+/* Larger ember particles with a soft glow */
+.particle-ember {
+  background: radial-gradient(circle, #E8D5A3 0%, #C9A84C 50%, transparent 100%);
+  filter: blur(1.5px);
+  animation: float-particle linear infinite;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;   /* was 0.5 — snappier fade in */
+  }
+  85% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-15vh) translateX(var(--drift, 0px)) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Ambient radial glow — pulses in the background */
+.hero-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 55% 45% at 68% 30%, rgba(74, 124, 90, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 35% at 22% 70%, rgba(201, 168, 76, 0.10) 0%, transparent 65%);
+  animation: ambient-pulse 8s ease-in-out infinite;
+}
+
+@keyframes ambient-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.06); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 920px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  padding: 9px 24px;
+  border-radius: 30px;
+  margin-bottom: 25px;
+  margin-top: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-badge span {
+  font-size: 0.68rem;
+  letter-spacing: 3.5px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+}
+
+.hero-badge-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.8rem, 8.5vw, 7.5rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.03;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 28px 0 32px;
+}
+
+.hdl {
+  width: 70px;
+  height: 1px;
+}
+
+.hdl-left {
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+
+.hdl-right {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  color: rgba(255, 255, 255, 0.68);
+  font-style: italic;
+  margin-bottom: 52px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-scroll-label {
+  font-size: 0.62rem;
+  letter-spacing: 3.5px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.scroll-mouse {
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+}
+
+.scroll-wheel {
+  width: 3px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 2px;
+  animation: wheel 2s ease-in-out infinite;
+}
+
+@keyframes wheel {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(9px);
+    opacity: 0.2;
+  }
+}
+
+@media (min-width: 769px) {
+  .hero-actions {
+    gap: 80px;
+  }
+}
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  #hero {
+    min-height: 680px;
+  }
+  .hero-content {
+    max-width: 680px;
+  }
+  .leaf-deco-1 {
+    width: 300px;
+    opacity: 0.18;
+  }
+  .leaf-deco-3 {
+    display: none;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  #hero {
+    min-height: 600px;
+  }
+  .hero-title {
+    font-size: clamp(2.6rem, 11vw, 4.2rem);
+    letter-spacing: -0.5px;
+  }
+  .hero-subtitle {
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    margin-bottom: 32px;
+  }
+  .hero-badge {
+    padding: 7px 18px;
+    margin-bottom: 18px;
+  }
+  .hero-badge span {
+    font-size: 0.6rem;
+    letter-spacing: 2.5px;
+  }
+  .hero-divider {
+    margin: 18px 0 22px;
+  }
+  .hero-content {
+    padding: 0 20px;
+  }
+  .leaf-deco-1 {
+    width: 220px;
+    opacity: 0.14;
+  }
+  .leaf-deco-2,
+  .leaf-deco-3 {
+    display: none;
+  }
+  .hero-scroll {
+    bottom: 24px;
+  }
+}
+
+/* ── Small phones ── */
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
+  }
+  .hero-subtitle br {
+    display: none;
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding: 0 12px;
+  }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-ghost {
+    width: 100%;
+    text-align: center;
+    padding: 15px 20px;
+  }
+}

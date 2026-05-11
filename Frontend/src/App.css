@@ -1,0 +1,118 @@
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.gold-line {
+  width: 36px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.sec-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.sec-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  margin: 14px 0;
+}
+
+.sec-header p {
+  font-size: 0.95rem;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--deep-green);
+  padding: 17px 44px;
+  font-size: 0.75rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.35s;
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-primary:hover {
+  background: var(--ivory);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201, 168, 76, 0.35);
+}
+
+.btn-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 17px 44px;
+  font-size: 0.75rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.35s;
+  display: inline-block;
+  backdrop-filter: blur(4px);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-3px);
+}
+
+/* ── Mobile button sizing ── */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-ghost {
+    padding: 15px 32px;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+  }
+  .sec-header h2 {
+    font-size: clamp(1.7rem, 6vw, 2.6rem);
+  }
+  .sec-header p {
+    font-size: 0.88rem;
+    padding: 0 8px;
+  }
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-primary,
+  .btn-ghost {
+    padding: 14px 24px;
+    font-size: 0.68rem;
+    letter-spacing: 1.8px;
+  }
+  .sec-header {
+    margin-bottom: 36px;
+  }
+  .sec-header h2 {
+    font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  }
+  .gold-line {
+    width: 24px;
+  }
+}
