@@ -11,15 +11,39 @@ export default function ParticipateForm() {
 
   const [form, setForm]           = useState({ name: '', email: '', phone: '', guests: '1', notes: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [submittedEmail, setSubmittedEmail] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    if (!event) return;
+    setLoading(true)
+
+    try {
+      const response = await fetch('http://localhost:5000/api/events/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, eventName: event.title })
+      })
+
+      if (response.ok) {
+        setSubmittedEmail(form.email)
+        setSubmitted(true)
+        setForm({ name: '', email: '', phone: '', guests: '1', notes: '' })
+        setTimeout(() => setSubmitted(false), 3500)
+      } else {
+        alert('Failed to register for the event. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error registering for event:', error)
+      alert('An error occurred. Please try again later.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const goBack = () => navigate('/', { state: { scrollTo: 'events' } })
@@ -61,7 +85,7 @@ export default function ParticipateForm() {
           submitted ? (
             <div className="pf-success">
               <i className="fas fa-check-circle"></i>
-              <p>You're registered! We'll send confirmation details to <strong>{form.email}</strong>.</p>
+              <p>You're registered! We'll send confirmation details to <strong>{submittedEmail}</strong>.</p>
             </div>
           ) : (
             <form className="pf-form" onSubmit={handleSubmit}>
@@ -87,8 +111,8 @@ export default function ParticipateForm() {
                 <label>Special Requests <span>(optional)</span></label>
                 <textarea name="notes" rows={4} placeholder="Dietary requirements, accessibility needs, etc." value={form.notes} onChange={handleChange} />
               </div>
-              <button className="pf-submit-btn" type="submit">
-                Confirm Registration <i className="fas fa-arrow-right"></i>
+              <button className="pf-submit-btn" type="submit" disabled={loading}>
+                {loading ? 'Submitting...' : <><>Confirm Registration </> <i className="fas fa-arrow-right"></i></>}
               </button>
             </form>
           )

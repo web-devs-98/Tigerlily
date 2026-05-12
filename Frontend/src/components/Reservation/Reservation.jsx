@@ -25,11 +25,58 @@ const details = [
 ]
 
 export default function Reservation() {
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    date: '',
+    time: '',
+    guests: '3–4 People',
+    phone: '',
+    specialRequests: ''
+  });
 
-  const handleSubmit = () => {
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          date: '',
+          time: '',
+          guests: '3–4 People',
+          phone: '',
+          specialRequests: ''
+        });
+        setTimeout(() => setSubmitted(false), 3500);
+      } else {
+        console.error('Failed to submit reservation');
+        alert('Failed to submit reservation. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting reservation:', error);
+      alert('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -60,57 +107,58 @@ export default function Reservation() {
           </div>
         </div>
 
-        <div className="res-form" data-aos="fade-left" data-aos-delay="200">
+        <form className="res-form" data-aos="fade-left" data-aos-delay="200" onSubmit={handleSubmit}>
           <div className="res-form-title">Make a Reservation</div>
           <div className="res-form-sub">We'll confirm your booking within 2 hours</div>
 
           <div className="form-row">
             <div className="form-group">
               <label>First Name</label>
-              <input type="text" placeholder="Arjun" />
+              <input type="text" name="firstName" placeholder="Arjun" value={formData.firstName} onChange={handleChange} required />
             </div>
             <div className="form-group">
               <label>Last Name</label>
-              <input type="text" placeholder="Sharma" />
+              <input type="text" name="lastName" placeholder="Sharma" value={formData.lastName} onChange={handleChange} required />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group">
               <label>Date</label>
-              <input type="date" />
+              <input type="date" name="date" value={formData.date} onChange={handleChange} required />
             </div>
             <div className="form-group">
               <label>Time</label>
-              <input type="time" />
+              <input type="time" name="time" value={formData.time} onChange={handleChange} required />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group">
               <label>Number of Guests</label>
-              <select>
+              <select name="guests" value={formData.guests} onChange={handleChange} required>
                 <option>1 Person</option>
                 <option>2 People</option>
-                <option defaultValue>3–4 People</option>
+                <option>3–4 People</option>
                 <option>5–6 People</option>
                 <option>7+ People</option>
               </select>
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" placeholder="+91 98765 43210" />
+              <input type="tel" name="phone" placeholder="+91 98765 43210" value={formData.phone} onChange={handleChange} required />
             </div>
           </div>
           <div className="form-group">
             <label>Special Requests</label>
-            <textarea rows="3" placeholder="Dietary requirements, celebrations, seating preferences..."></textarea>
+            <textarea rows="3" name="specialRequests" placeholder="Dietary requirements, celebrations, seating preferences..." value={formData.specialRequests} onChange={handleChange}></textarea>
           </div>
           <button
+            type="submit"
             className={`form-submit ${submitted ? 'sent' : ''}`}
-            onClick={handleSubmit}
+            disabled={loading}
           >
-            {submitted ? '✓ Reservation Sent!' : 'Confirm Reservation →'}
+            {loading ? 'Sending...' : submitted ? '✓ Reservation Sent!' : 'Confirm Reservation →'}
           </button>
-        </div>
+        </form>
       </div>
     </section>
   )

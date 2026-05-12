@@ -12,15 +12,39 @@ export default function HostEvent() {
     eventTitle: '', eventType: '', date: '', guests: '', timeSlot: '', description: ''
   })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    setLoading(true)
+
+    try {
+      const response = await fetch('http://localhost:5000/api/events/host', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setForm({
+          name: '', email: '', phone: '', organization: '',
+          eventTitle: '', eventType: '', date: '', guests: '', timeSlot: '', description: ''
+        })
+        setTimeout(() => setSubmitted(false), 3500)
+      } else {
+        alert('Failed to submit event proposal. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting event proposal:', error)
+      alert('An error occurred. Please try again later.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const goBack = () => navigate('/', { state: { scrollTo: 'events' } })
@@ -114,8 +138,8 @@ export default function HostEvent() {
               <label>Event Description / Vision</label>
               <textarea name="description" rows={4} placeholder="Tell us about your event concept, theme, special requirements…" value={form.description} onChange={handleChange} required />
             </div>
-            <button className="he-submit-btn" type="submit">
-              Submit Proposal <i className="fas fa-arrow-right"></i>
+            <button className="he-submit-btn" type="submit" disabled={loading}>
+              {loading ? 'Submitting...' : <><>Submit Proposal </> <i className="fas fa-arrow-right"></i></>}
             </button>
           </form>
         )}
