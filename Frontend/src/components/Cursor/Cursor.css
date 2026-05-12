@@ -1,0 +1,22 @@
+/* ── Hollow ring — follows instantly via CSS vars ── */
+.cursor-dot {
+  position: fixed;
+  top: -6px;
+  left: -6px;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  transform: translate(var(--tx, -300px), var(--ty, -300px));
+  transition: opacity 0.3s;
+}
+
+/* Touch / mobile — hide both */
+@media (hover: none) {
+  .cursor-dot,
+  .cursor-glow { display: none; }
+}

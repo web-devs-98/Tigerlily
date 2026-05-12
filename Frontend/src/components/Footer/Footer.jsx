@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import { getLenis } from '../../lib/lenis'
 import './Footer.css'
 
 const navLinks = [
@@ -33,7 +34,8 @@ export default function Footer() {
   const handleNavClick = (e, target) => {
     e.preventDefault()
     if (isHome) {
-      document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const l = getLenis()
+      l ? l.scrollTo(`#${target}`) : document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     } else {
       navigate('/', { state: { scrollTo: target } })
     }
@@ -43,7 +45,7 @@ export default function Footer() {
     <footer>
       <div className="footer-top">
         <div>
-          <a href="/" className="footer-logo" onClick={e => { e.preventDefault(); isHome ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/') }}>
+          <a href="/" className="footer-logo" onClick={e => { e.preventDefault(); if (isHome) { const l = getLenis(); l ? l.scrollTo(0) : window.scrollTo({ top: 0, behavior: 'smooth' }) } else { navigate('/') } }}>
             Tiger<span>lily</span>
           </a>
           <p className="footer-about">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getLenis } from '../../../lib/lenis'
 import Navbar from '../../Navbar/Navbar'
 import Footer from '../../Footer/Footer'
 import { BRANCH_MENU } from '../../../data/menuData'
@@ -10,7 +11,7 @@ export default function FullMenuPage() {
   const [selectedBranch, setSelectedBranch] = useState(null)
   const navigate = useNavigate()
 
-  useEffect(() => { window.scrollTo(0, 0) }, [])
+  useEffect(() => { const l = getLenis(); l ? l.scrollTo(0, { immediate: true }) : window.scrollTo(0, 0) }, [])
 
   const selectBranch = (key) => {
     setSelectedBranch(key)

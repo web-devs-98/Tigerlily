@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { getLenis } from '../../lib/lenis'
 import './Navbar.css'
 
 const NAV_LINKS = [
@@ -80,11 +81,10 @@ export default function Navbar() {
     e.preventDefault()
     closeMenu()
     if (isHome) {
-      document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      // Push a proper hash URL so the address bar reads /#section
+      const l = getLenis()
+      l ? l.scrollTo(`#${target}`) : document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       window.history.pushState(null, '', '/' + target)
     } else {
-      // Navigate home and let HomePage scroll to the section via location.state
       navigate('/', { state: { scrollTo: target } })
     }
   }
@@ -93,7 +93,8 @@ export default function Navbar() {
     e.preventDefault()
     closeMenu()
     if (isHome) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      const l = getLenis()
+      l ? l.scrollTo(0) : window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       navigate('/')
     }

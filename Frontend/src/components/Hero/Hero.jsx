@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Hero.css'
+import { getLenis } from '../../lib/lenis'
 
 import img1 from '../../assets/cafe-entrance.png'
 import img2 from '../../assets/cafe-garden-patio.png'
@@ -61,8 +62,20 @@ export default function Hero() {
 
   const scrollTo = (e, id) => {
     e.preventDefault()
-    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const el = document.querySelector(id)
+    const l = getLenis()
+    l ? l.scrollTo(el) : el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+
+  const onMagnet = (e) => {
+    const el = e.currentTarget
+    const r  = el.getBoundingClientRect()
+    const dx = (e.clientX - (r.left + r.width  / 2)) * 0.35
+    const dy = (e.clientY - (r.top  + r.height / 2)) * 0.35
+    el.style.transform = `translate(${dx}px,${dy}px)`
+  }
+
+  const offMagnet = (e) => { e.currentTarget.style.transform = '' }
 
   return (
     <section id="hero">
@@ -107,8 +120,13 @@ export default function Hero() {
           <div className="hero-badge-dot"></div>
         </div>
 
-        <h1 className="hero-title" data-aos="fade-up" data-aos-delay="380">
-          Where <em>Nature</em><br />Meets the Cup
+        <h1 className="hero-title">
+          <span className="wr" style={{'--d':'0.3s'}}>Where</span>{' '}
+          <em><span className="wr" style={{'--d':'0.55s'}}>Nature</span></em>
+          <br />
+          <span className="wr" style={{'--d':'0.8s'}}>Meets</span>{' '}
+          <span className="wr" style={{'--d':'1.0s'}}>the</span>{' '}
+          <span className="wr" style={{'--d':'1.2s'}}>Cup</span>
         </h1>
 
         <div className="hero-divider" data-aos="fade-up" data-aos-delay="500">
@@ -126,10 +144,22 @@ export default function Hero() {
         </p>
 
         <div className="hero-actions" data-aos="fade-up" data-aos-delay="700">
-          <a href="#reservation" className="btn-primary" onClick={e => scrollTo(e, '#reservation')}>
+          <a
+            href="#reservation"
+            className="btn-primary"
+            onClick={e => scrollTo(e, '#reservation')}
+            onMouseMove={onMagnet}
+            onMouseLeave={offMagnet}
+          >
             Reserve a Table
           </a>
-          <a href="#menu" className="btn-ghost" onClick={e => scrollTo(e, '#menu')}>
+          <a
+            href="#menu"
+            className="btn-ghost"
+            onClick={e => scrollTo(e, '#menu')}
+            onMouseMove={onMagnet}
+            onMouseLeave={offMagnet}
+          >
             Explore Menu
           </a>
         </div>

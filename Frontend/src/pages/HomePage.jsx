@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { getLenis } from '../lib/lenis'
 import Navbar from '../components/Navbar/Navbar'
 import Hero from '../components/Hero/Hero'
+import VideoSection from '../components/VideoSection/VideoSection'
 import Marquee from '../components/Marquee/Marquee'
 import About from '../components/About/About'
 import Menu from '../components/Menu/Menu'
@@ -20,8 +22,10 @@ export default function HomePage({ initialScrollTo }) {
     if (!target) return
     const tryScroll = () => {
       const el = document.getElementById(target)
-      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
-      else     { setTimeout(tryScroll, 100) }
+      if (el) {
+        const l = getLenis()
+        l ? l.scrollTo(el, { offset: 0 }) : el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else { setTimeout(tryScroll, 100) }
     }
     tryScroll()
   }, [])
@@ -30,6 +34,7 @@ export default function HomePage({ initialScrollTo }) {
     <>
       <Navbar />
       <Hero />
+      <VideoSection />
       <Marquee />
       <About />
       <Menu />

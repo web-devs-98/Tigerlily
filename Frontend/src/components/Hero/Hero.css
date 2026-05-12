@@ -153,13 +153,15 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: rgba(201, 168, 76, 0.12);
-  border: 1px solid rgba(201, 168, 76, 0.35);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.45);
   padding: 9px 24px;
   border-radius: 30px;
   margin-bottom: 25px;
   margin-top: 20px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
 .hero-badge span {
@@ -184,11 +186,23 @@
   line-height: 1.03;
   margin-bottom: 10px;
   letter-spacing: -1px;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 .hero-title em {
   font-style: italic;
   color: var(--gold-light);
+}
+
+.wr {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px) skewY(2deg);
+  animation: wordIn 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--d, 0s) forwards;
+}
+
+@keyframes wordIn {
+  to { opacity: 1; transform: translateY(0) skewY(0) }
 }
 
 .hero-divider {

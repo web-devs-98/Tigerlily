@@ -1,28 +1,36 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --deep-green: #1A3329;
-  --forest: #1F3B2F;
-  --sage: #4A7C5A;
-  --sage-light: #7BA888;
-  --gold: #C9A84C;
-  --gold-light: #E8D5A3;
-  --ivory: #FAF6F0;
-  --cream: #F2E8D9;
-  --blush: #E4D0B3;
+  --deep-green: #112A20;
+  --forest: #173328;
+  --sage: #418256;
+  --sage-light: #70A882;
+  --gold: #D4AF37;
+  --gold-light: #F1E5AC;
+  --ivory: #F8F4EB;
+  --cream: #EFE4D2;
+  --blush: #E2C9A6;
   --text: #1C1C1C;
   --text-mid: #4A4A4A;
   --text-light: #7A7A7A;
   --white: #FFFFFF;
 }
 
-html { scroll-behavior: smooth; }
+/* Lenis handles smooth scroll — no CSS scroll-behavior needed */
 
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--ivory);
+  background-image: radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(65, 130, 86, 0.05) 0%, transparent 40%);
+  background-attachment: fixed;
   color: var(--text);
   overflow-x: hidden;
+  cursor: none;
+}
+
+@media (hover: none) {
+  body { cursor: auto; }
 }
 
 #root {
@@ -32,3 +40,36 @@ body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--deep-green); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ── Film grain overlay ── */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: grain 0.5s steps(1) infinite;
+}
+
+@keyframes grain {
+  0%   { background-position:   0%   0% }
+  20%  { background-position:  -8% -12% }
+  40%  { background-position:   6%  18% }
+  60%  { background-position: -14%   4% }
+  80%  { background-position:  10%  -8% }
+  100% { background-position:   0%   0% }
+}
+
+/* ── Route fade-in transition ──
+   IMPORTANT: only opacity — no transform.
+   Any transform on a parent breaks position:fixed on children (navbar). */
+.route-fade {
+  animation: routeIn 0.45s ease forwards;
+}
+
+@keyframes routeIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}

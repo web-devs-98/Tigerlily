@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { getLenis } from '../../../lib/lenis'
 import Navbar from '../../Navbar/Navbar'
 import Footer from '../../Footer/Footer'
 import './ParticipateForm.css'
@@ -14,7 +15,7 @@ export default function ParticipateForm() {
   const [submittedEmail, setSubmittedEmail] = useState('')
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => { window.scrollTo(0, 0) }, [])
+  useEffect(() => { const l = getLenis(); l ? l.scrollTo(0, { immediate: true }) : window.scrollTo(0, 0) }, [])
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 

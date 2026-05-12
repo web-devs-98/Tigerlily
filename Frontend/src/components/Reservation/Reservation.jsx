@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Reservation.css'
+import bgImg from '../../assets/cafe-indoor-botanical.png'
 
 const details = [
   {
@@ -80,7 +81,8 @@ export default function Reservation() {
   }
 
   return (
-    <section id="reservation">
+    <section id="reservation" style={{ backgroundImage: `url(${bgImg})` }}>
+      <div className="res-overlay"></div>
       <div className="res-wrapper">
         <div className="res-info" data-aos="fade-right">
           <div className="section-label" style={{ justifyContent: 'flex-start' }}>

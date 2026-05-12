@@ -18,16 +18,21 @@ app.use(express.json());
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+// Cached MongoDB connection — reused across serverless warm invocations
+let isConnected = false;
+async function connectDB() {
+  if (isConnected && mongoose.connection.readyState === 1) return;
+  await mongoose.connect(process.env.MONGODB_URI);
+  isConnected = true;
+  console.log('Connected to MongoDB');
+}
 
 // --- Routes ---
 
 // 1. Reservations
 app.post('/api/reservations', async (req, res) => {
   try {
+    await connectDB();
     const { firstName, lastName, date, time, guests, phone, specialRequests } = req.body;
 
     const newReservation = new Reservation({ firstName, lastName, date, time, guests, phone, specialRequests });
@@ -61,6 +66,7 @@ app.post('/api/reservations', async (req, res) => {
 // 2. Event Registration (Participate)
 app.post('/api/events/register', async (req, res) => {
   try {
+    await connectDB();
     const { eventName, name, email, phone, guests, notes } = req.body;
 
     const newRegistration = new EventRegistration({ eventName, name, email, phone, guests, notes });
@@ -94,6 +100,7 @@ app.post('/api/events/register', async (req, res) => {
 // 3. Host an Event Proposal
 app.post('/api/events/host', async (req, res) => {
   try {
+    await connectDB();
     const { name, email, phone, organization, eventTitle, eventType, date, guests, timeSlot, description } = req.body;
 
     const newProposal = new HostEvent({ name, email, phone, organization, eventTitle, eventType, date, guests, timeSlot, description });
@@ -128,6 +135,9 @@ app.post('/api/events/host', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Export for Vercel serverless. Only bind a port when running locally.
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
